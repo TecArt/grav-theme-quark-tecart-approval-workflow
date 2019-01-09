@@ -1,0 +1,12 @@
+{% set review_workflow = config.plugins['tecart-review-workflow'].enabled %}
+{% set show_draft = (uri.query('mode') == 'draft') and page.header.draft.content %}
+{% set content = (review_workflow and show_draft) ? page.header.draft.content|markdown : page.content %}
+{% set items = (review_workflow and show_draft) ? page.header.draft.review : page.header.review %}
+
+<section id="{{ id }}" class="section modular-hero hero {{ items.hero_classes }} {{ items.background.parallax ? 'parallax' : '' }}" {% if hero_image %}style="background-image: url({{ hero_image.url }});"{% endif %}>
+    <div class="image-overlay"></div>
+    <section class="container {{ grid_size }}" style="text-align: {{ itmes.hero_align|default('center') }}">
+        {{ content|raw }}
+    </section>
+    <i id="to-start" class="pulse fa fa-angle-down"></i>
+</section>
